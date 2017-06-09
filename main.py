@@ -33,20 +33,23 @@ while True:
 
     # Get time to next bus
     for route in stop_data:
+        routeId = route['routeId']
+        current_time = route['time']
 
-        current_time = route['time'] / 60.0
+        next_bus_in_route = route['stopDetails'][0]
 
-        if (route['routeId'] == '201'):
-            next_bus = route['stopDetails'][0]
+        arriving_time = next_bus_in_route['departure']
+        scheduled_time = next_bus_in_route['departureNonRealTime']
 
-            arriving_time = next_bus['departure'] / 60.0
-            scheduled_time = next_bus['departureNonRealTime'] / 60.0
+        bus_arrives_in_minutes = (arriving_time - current_time) / 60.0
+        bus_scheduled_to_arrive_in_minutes = (scheduled_time - current_time) / 60.0
+        difference_in_minutes = bus_arrives_in_minutes - bus_scheduled_to_arrive_in_minutes
 
-            bus_arrives_in_minutes = (arriving_time - current_time)
-            bus_scheduled_to_arrive_in_minutes = (scheduled_time - current_time)
+        print(routeId + str(bus_arrives_in_minutes) + ", " + str(bus_scheduled_to_arrive_in_minutes) + ", " + str(difference_in_minutes))
 
-            statsd.gauge('app.grt.201.arriving', bus_arrives_in_minutes)
-            statsd.gauge('app.grt.201.scheduled', bus_scheduled_to_arrive_in_minutes)
+        statsd.gauge('app.grt.' + routeId + '.arriving', bus_arrives_in_minutes)
+        statsd.gauge('app.grt.' + routeId + '.scheduled', bus_scheduled_to_arrive_in_minutes)
+        statsd.gauge('app.grt.' + routeId + '.difference', difference_in_minutes)
 
     # Ping every 30 seconds
     time.sleep(30 - time.time() % 30)
