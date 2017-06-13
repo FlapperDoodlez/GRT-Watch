@@ -7,8 +7,8 @@ Waterloo_municipalityId = '39CE69B3-7415-43E0-BBA8-E9BE9A1D88E5' # Waterloo Muni
 stopId = '1093'                                                  # Columbia/Phillip Southbound
 
 options = {
-	'api_key':'be1f2f552b4c72f3e16c27c4bf08e732',
-	'app_key':'a9855a5b8adedda6d04b239bd7496a3f2c43597d'
+	'api_key':'api_key',
+	'app_key':'app_key'
 }
 
 initialize(**options)
