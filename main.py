@@ -39,6 +39,9 @@ while True:
 
         # iterate over every route
         for route in stop_data:
+            
+            # get route id
+            routeId = route['routeId']
 
             # get the next scheduled bus
             next_bus_in_route = route['stopDetails'][0]
