@@ -73,5 +73,5 @@ while True:
 
     except requests.exceptions.RequestException as e:
         status = CheckStatus.CRITICAL
-        statsd.service_check(check_name='app.grt.status', status=status, message=str(r.status_code))
+        statsd.service_check(check_name='app.grt.status', status=status, message=str(e))
         time.sleep(300)
